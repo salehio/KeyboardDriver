@@ -1,13 +1,7 @@
-﻿using HidTesting.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 using WindowsDesktop;
 
-namespace HidTesting.VirtualDesktopManager
+namespace KeyboardDriver
 {
     internal class VirtualDesktopManager
     {

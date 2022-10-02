@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.HumanInterfaceDevice;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.Win32;
-using WindowsDesktop;
-using HidTesting.Logging;
-using HidTesting.VirtualDesktopManager;
-using System.Printing;
-using Windows.Management.Workplace;
-using System.ComponentModel;
 
-namespace HIDdeviceTest
+namespace KeyboardDriver
 {
     public static class HidTest
     {
