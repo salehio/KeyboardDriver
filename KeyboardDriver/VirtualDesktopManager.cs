@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Win32.Foundation;
 using WindowsDesktop;
 
 namespace KeyboardDriver
@@ -22,6 +23,18 @@ namespace KeyboardDriver
 
             Logger.WriteDebug($"Switching to index {index} with id {Desktops[index].Id}");
             Desktops[index].Switch();
+        }
+
+        public static void ModifyHwndPinState(HWND hwnd, bool shouldBePinned = true)
+        {
+            if (shouldBePinned)
+            {
+                VirtualDesktop.PinWindow(hwnd.Value);
+            }
+            else
+            {
+                VirtualDesktop.UnpinWindow(hwnd.Value);
+            }
         }
     }
 }

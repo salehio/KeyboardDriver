@@ -1,23 +1,27 @@
 ﻿using Windows.Win32;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Windows.Win32.Foundation;
+using static KeyboardDriver.VirtualDesktopManager;
 
 namespace KeyboardDriver
 {
     internal static class WindowUtils
     {
-        public static void ToggleTopMostWindow()
+        public static void ToggleFocusedWindow()
         {
 
             var hwnd = PInvoke.GetForegroundWindow();
+            var makeTopMost = !IsTopMost(hwnd);
             PInvoke.SetWindowPos(
                 hwnd,
-                IsTopMost(hwnd) ? HWND.HWND_NOTOPMOST : HWND.HWND_TOPMOST,
+                makeTopMost ? HWND.HWND_TOPMOST : HWND.HWND_NOTOPMOST,
                 0,
                 0,
                 0,
                 0,
                 SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE);
+
+            ModifyHwndPinState(hwnd, makeTopMost);
         }
 
         public static bool IsTopMost(HWND hwnd)

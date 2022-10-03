@@ -104,8 +104,9 @@ namespace KeyboardDriver
                     _manager.SwitchToIndex(int.Parse(cmdInfo[1]));
                     break;
                 case "F":
-                    // Set top most window. TODO: Move to last monitor position.
-                    WindowUtils.ToggleTopMostWindow();
+                    // Set top most window and pin to all virtual desktops.
+                    // TODO: Move to last monitor position.
+                    WindowUtils.ToggleFocusedWindow();
                     break;
             }
         }
