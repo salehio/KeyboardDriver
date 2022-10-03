@@ -1,3 +1,4 @@
-﻿CreateFile
-GetTickCount
-GetForegroundWindow
+﻿Windows.Win32.UI.WindowsAndMessaging
+
+EnumDisplayMonitors
+GetMonitorInfo

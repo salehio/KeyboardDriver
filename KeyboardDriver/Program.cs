@@ -6,6 +6,9 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.HumanInterfaceDevice;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.Win32;
+using Windows.Win32.UI.WindowsAndMessaging;
+using Windows.Win32.Foundation;
 
 namespace KeyboardDriver
 {
@@ -62,7 +65,6 @@ namespace KeyboardDriver
 
                 var dataReader = DataReader.FromBuffer(buffer);
                 var messages = dataReader.ReadString(buffer.Length);
-                Logger.WriteDebug(buffer.Length);
 
                 foreach (var message in messages.Trim('\0').Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
                 {
@@ -100,6 +102,10 @@ namespace KeyboardDriver
                 case "D":
                     // arg 0 is the virtual desktop to switch to.
                     _manager.SwitchToIndex(int.Parse(cmdInfo[1]));
+                    break;
+                case "F":
+                    // Set top most window. TODO: Move to last monitor position.
+                    WindowUtils.ToggleTopMostWindow();
                     break;
             }
         }
