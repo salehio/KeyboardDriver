@@ -1,4 +1,4 @@
 ﻿Windows.Win32.UI.WindowsAndMessaging
 
-EnumDisplayMonitors
-GetMonitorInfo
+//EnumDisplayMonitors
+//GetMonitorInfo

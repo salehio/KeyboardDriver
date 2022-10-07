@@ -25,6 +25,11 @@ namespace KeyboardDriver
             Desktops[index].Switch();
         }
 
+        public void MoveWindowToMain(HWND hwnd)
+        {
+            VirtualDesktop.MoveToDesktop(hwnd, Desktops[0]);
+        }
+
         public static void ModifyHwndPinState(HWND hwnd, bool shouldBePinned = true)
         {
             if (shouldBePinned)

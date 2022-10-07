@@ -5,9 +5,15 @@ using static KeyboardDriver.VirtualDesktopManager;
 
 namespace KeyboardDriver
 {
-    internal static class WindowUtils
+    internal class WindowManager
     {
-        public static void ToggleFocusedWindow()
+        private readonly VirtualDesktopManager _vdManager;
+
+        public WindowManager(VirtualDesktopManager vdManager)
+        {
+            _vdManager = vdManager;
+        }
+        public void ToggleFocusedWindow()
         {
 
             var hwnd = PInvoke.GetForegroundWindow();
@@ -22,6 +28,12 @@ namespace KeyboardDriver
                 SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOSIZE);
 
             ModifyHwndPinState(hwnd, makeTopMost);
+
+            // If we're unfocusing, make sure the window is on the primary desktop.
+            if (!makeTopMost)
+            {
+                _vdManager.MoveWindowToMain(hwnd);
+            }
         }
 
         public static bool IsTopMost(HWND hwnd)

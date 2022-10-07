@@ -2,25 +2,34 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Windows.Devices.Enumeration;
 using Windows.Devices.HumanInterfaceDevice;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.Win32;
-using Windows.Win32.UI.WindowsAndMessaging;
-using Windows.Win32.Foundation;
 
 namespace KeyboardDriver
 {
     public static class HidTest
     {
-        private static VirtualDesktopManager _manager = default!;
+        private static WindowManager _windowManager = default!;
+        private static VirtualDesktopManager _desktopManager = default!;
+        private static AudioHandler _audioHandler = default!;
+        private static DriverAppContext _context = default!; 
 
         [STAThread]
         public static void Main(string[] args)
         {
-            _manager = new VirtualDesktopManager();
+            _audioHandler = new AudioHandler();
+            _desktopManager = new VirtualDesktopManager();
+            _windowManager = new WindowManager(_desktopManager);
             RegisterListener().GetAwaiter().GetResult();
+
+            //ApplicationConfiguration.Initialize();
+            //_context = new DriverAppContext();
+            //Logger.TrayIcon = _context.TrayIcon;
+            //Application.Run(_context);
+
             Thread.Sleep(-1);
         }
 
@@ -70,7 +79,6 @@ namespace KeyboardDriver
                 {
                     var m = message.Trim('\0');
                     Logger.WriteDebug(m);
-                    Logger.WriteDebug(i++);
 
                     var parsedCmd = ParseCommand(m);
                     if(parsedCmd != null)
@@ -101,12 +109,29 @@ namespace KeyboardDriver
                 // Switch virtual desktops
                 case "D":
                     // arg 0 is the virtual desktop to switch to.
-                    _manager.SwitchToIndex(int.Parse(cmdInfo[1]));
+                    _desktopManager.SwitchToIndex(int.Parse(cmdInfo[1]));
                     break;
                 case "F":
                     // Set top most window and pin to all virtual desktops.
                     // TODO: Move to last monitor position.
-                    WindowUtils.ToggleFocusedWindow();
+                    _windowManager.ToggleFocusedWindow();
+                    break;
+                case "A":
+                    // Set top most window and pin to all virtual desktops.
+                    // TODO: Move to last monitor position.
+                    switch (cmdInfo[1])
+                    {
+                        case "U":
+                            _audioHandler.StepVolumeUp();
+                            break;
+                        case "D":
+                            _audioHandler.StepVolumeDown();
+                            break;
+                        case "M":
+                            _audioHandler.ToggleMute();
+                            break;
+                    }
+
                     break;
             }
         }
