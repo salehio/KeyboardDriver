@@ -25,10 +25,10 @@ namespace KeyboardDriver
             _windowManager = new WindowManager(_desktopManager);
             RegisterListener().GetAwaiter().GetResult();
 
-            //ApplicationConfiguration.Initialize();
-            //_context = new DriverAppContext();
-            //Logger.TrayIcon = _context.TrayIcon;
-            //Application.Run(_context);
+            ApplicationConfiguration.Initialize();
+            _context = new DriverAppContext();
+            Logger.LogHandlers.Add((v, s) => _context.PrimaryForm.AppendLog(v, s));
+            Application.Run(_context);
 
             Thread.Sleep(-1);
         }

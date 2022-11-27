@@ -1,9 +1,5 @@
 ﻿using KeyboardDriver.Properties;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KeyboardDriver
@@ -11,6 +7,8 @@ namespace KeyboardDriver
     public class DriverAppContext : ApplicationContext
     {
         public NotifyIcon TrayIcon { get; private set; }
+
+        public PrimaryForm PrimaryForm { get; set; }
 
         public DriverAppContext()
         {
@@ -23,6 +21,25 @@ namespace KeyboardDriver
                 },
                 Visible = true
             };
+            TrayIcon.DoubleClick += new EventHandler(OnDoubleClick);
+
+            PrimaryForm = new PrimaryForm();
+
+            PrimaryForm.Show();
+        }
+
+        private void OnDoubleClick(object? Sender, EventArgs e)
+        {
+            if (PrimaryForm.Visible)
+            {
+                PrimaryForm.Hide();
+            }
+            else
+            {
+                PrimaryForm.Show();
+            }
+
+            PrimaryForm.ScrollToBottom();
         }
 
         void Exit(object? sender, EventArgs e)

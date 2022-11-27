@@ -1,10 +1,8 @@
-﻿$taskName = "Custom Keyboard Utility Driver"
-$taskFolder = "Z:\ProductivityTools\KeyboardDriver\"
-$buildFolder = "~/source\repos\KeyboardDriver\KeyboardDriver\bin\Debug\net6.0-windows10.0.19041.0/"
+﻿. $(Join-Path $PSScriptRoot common.ps1)
 
 Stop-ScheduledTask -TaskName $taskName
 
-sleep 1
+sleep 3
 
 Remove-Item $(Join-Path $taskFolder "*") -Recurse
 

@@ -33,20 +33,31 @@ namespace KeyboardDriver
 
         public void StepVolumeUp()
         {
+            Unmute();
             _device.AudioEndpointVolume.VolumeStepUp();
-            Logger.WriteDebug($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
+            Logger.WriteInformation($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
         }
 
         public void StepVolumeDown()
         {
+            Unmute();
             _device.AudioEndpointVolume.VolumeStepDown();
-            Logger.WriteDebug($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
+            Logger.WriteInformation($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
+        }
+
+        public void Unmute()
+        {
+            if (_device.AudioEndpointVolume.Mute)
+            {
+                _device.AudioEndpointVolume.Mute = false;
+                Logger.WriteInformation($"Unmuting");
+            }
         }
 
         public void ToggleMute()
         {
             _device.AudioEndpointVolume.Mute = !_device.AudioEndpointVolume.Mute;
-            Logger.WriteDebug($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
+            Logger.WriteInformation($"Volume: {_device.AudioEndpointVolume.MasterVolumeLevelScalar}");
         }
 
         private class NotificationClient : IMMNotificationClient

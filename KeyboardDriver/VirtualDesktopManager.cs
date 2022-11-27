@@ -21,7 +21,7 @@ namespace KeyboardDriver
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            Logger.WriteDebug($"Switching to index {index} with id {Desktops[index].Id}");
+            Logger.WriteInformation($"Switching to index {index} with id {Desktops[index].Id}");
             Desktops[index].Switch();
         }
 
