@@ -16,6 +16,7 @@ namespace KeyboardDriver
         public PrimaryForm()
         {
             this.Closing += PrimaryForm_Closing;
+            this.Text = "Testerino";
 
             LogOutput = new RichTextBox
             {
